@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
+
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
 msg_info "Installing Dependencies"
 apt-get install -y lsb-base &>/dev/null
 apt-get install -y lsb-release &>/dev/null
