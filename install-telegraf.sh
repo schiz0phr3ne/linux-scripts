@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
-apt-get update
 
-apt-get install -y lsb-base
-apt-get install -y lsb-release
-apt-get install -y gnupg2
+echo "Installing dependencies..."
+apt-get update &>/dev/null
+apt-get install -y lsb-base &>/dev/null
+apt-get install -y lsb-release &>/dev/null
+apt-get install -y gnupg2 &>/dev/null
+echo "Dependencies installed..."
 
-wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+echo "Installing Telegraf repository..."
+wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add - &>/dev/null
+echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list &>/dev/null
+echo "Repository installed..."
 
-apt-get update
+echo "Installing Telegraf..."
+apt-get update &>/dev/null
+apt-get install -y telegraf &>/dev/null
+echo "Telegraf installed..."
 
-apt-get install -y telegraf
+echo "Cleaning up..."
+apt-get autoremove &>/dev/null
+apt-get autoclean &>/dev/null
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* &>/dev/null
+echo "Cleaned..."
 
-apt-get autoremove
-apt-get autoclean
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+echo "Telegram successfully installed !"
